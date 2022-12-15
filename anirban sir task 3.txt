@@ -1,0 +1,15 @@
+SELECT * FROM [dbo].['100 HRA Records$']
+create table HRT4(employeenumber int,age float,education float,department nvarchar(255),jobRole nvarchar(255))
+
+
+MERGE into HRT3 as Target
+USING [dbo].['100 HRA Records$'] as Source
+ON Target.employeeNumber =Source.employeeNumber
+
+when matched then 
+update set Target.age=Source.age
+	when not matched by Target then
+ insert(age,education,department,employeenumber,jobrole) values(Source.age,Source.education,source.department,Source.employeenumber,Source.jobrole)
+    when not matched by source then
+	delete;
+	 
